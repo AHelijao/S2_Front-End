@@ -8,9 +8,7 @@ import {
   selectAllMovies,
   selectMoviesStatus,
 } from "../slices/movieSlice";
-import Skeleton from "../components/Skeleton";
-
-const SkeletonItems = Array.from({ length: 10 });
+import Skeleton from "react-loading-skeleton";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -30,13 +28,11 @@ const HomePage = () => {
     >
       <Navbar />
       <Banner />
-      {SkeletonItems.map((item) => (
-        <Skeleton key={item} />
+      {Object.keys(movies).map((title) => (
+        <Row key={title} title={title} movies={movies[title] || <Skeleton />} />
       ))}
     </div>
   );
 };
-
-
 
 export default HomePage;
