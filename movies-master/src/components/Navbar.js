@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import "../styles/Navbar.css";
 import { useNavigate } from "react-router-dom";
 import useAppStateContext from "../hooks/useAppStateContext";
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
   const { dispatch } = useAppStateContext();
+  const { theme, toggleTheme } = useTheme();
 
   const [show, setShow] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
@@ -41,7 +43,26 @@ const Navbar = () => {
         className="nav_logo"
         alt="Netflix Logo"
         src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
+        onClick={() => navigate("/home")}
+        style={{ cursor: "pointer" }}
       />
+
+      <div style={{ position: "fixed", right: "80px", top: "15px", zIndex: 100 }}>
+        <button
+          onClick={toggleTheme}
+          style={{
+            background: "transparent",
+            color: "white",
+            border: "1px solid white",
+            padding: "5px 10px",
+            borderRadius: "4px",
+            cursor: "pointer"
+          }}
+        >
+          {theme === 'dark' ? '☀️' : '🌙'}
+        </button>
+      </div>
+
       <img
         className="nav_avatar"
         onClick={(event) => handleAvatarClick(event)}
@@ -52,6 +73,7 @@ const Navbar = () => {
         <div className="dropdown">
           <span>John Doe</span>
           <span onClick={(event) => handleLogout(event)}>Logout</span>
+          <span onClick={() => navigate("/request-movie")}>Request Movie</span>
         </div>
       )}
     </div>

@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 import Navbar from "../components/Navbar";
+import { movieApi } from "../constants/axios";
+import { movieRequests } from "../constants/requests";
+import useAppStateContext from "../hooks/useAppStateContext";
 import Row from "../components/Row";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,7 +11,6 @@ import {
   selectAllMovies,
   selectMoviesStatus,
 } from "../slices/movieSlice";
-import Skeleton from "react-loading-skeleton";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -24,12 +26,12 @@ const HomePage = () => {
   return (
     <div
       className="page"
-      style={{ backgroundColor: "#111", overflow: "hidden" }}
+      style={{ backgroundColor: "var(--bg-color)", overflow: "hidden" }}
     >
       <Navbar />
       <Banner />
       {Object.keys(movies).map((title) => (
-        <Row key={title} title={title} movies={movies[title] || <Skeleton />} />
+        <Row key={title} title={title} movies={movies[title]} isLoading={status === "loading"} />
       ))}
     </div>
   );

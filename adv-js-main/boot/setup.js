@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 8000;
+const PORT = 8080;
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 
@@ -20,13 +20,12 @@ const userRouter = require("../routes/user.routes");
 const movieRouter = require("../routes/movie.routes");
 
 // mongoDB connection
-// mongoDB connection
-// try {
-//   mongoose.connect("mongodb://localhost:27017/epita");
-//   logger.info("Connected to MongoDB");
-// } catch (error) {
-//   logger.error("Error connecting to MongoDB", error);
-// }
+try {
+  mongoose.connect("mongodb://localhost:27017/epita");
+  logger.info("Connected to MongoDB");
+} catch (error) {
+  logger.error("Error connecting to MongoDB", error);
+}
 
 const registerCoreMiddleware = () => {
   try {
@@ -61,7 +60,7 @@ const registerCoreMiddleware = () => {
   } catch (error) {
     logger.error(
       "Error thrown while executing registerCoreMiddleware" +
-      JSON.stringify(error, undefined, 2)
+        JSON.stringify(error, undefined, 2)
     );
   }
 };

@@ -4,7 +4,9 @@ import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
 import { useNavigate } from "react-router-dom";
 
-const Row = ({ title, movies, isLarge }) => {
+import SkeletonCard from "./SkeletonCard";
+
+const Row = ({ title, movies, isLarge, isLoading }) => {
   const [movie, setMovie] = useState({});
   const [trailerUrl, setTrailerUrl] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -47,13 +49,17 @@ const Row = ({ title, movies, isLarge }) => {
     <div className="row">
       <h2>{title}</h2>
       <div className="row_posters">
-        {movies === undefined || movies.length === 0 ? (
-          <span>No Movies Foudn</span>
+        {isLoading ? (
+          Array.from({ length: 10 }).map((_, index) => (
+            <SkeletonCard key={index} isLarge={isLarge} />
+          ))
+        ) : movies === undefined || movies.length === 0 ? (
+          <span>No Movies Found</span>
         ) : (
           movies.map((movie) => (
             <img
               key={movie.movie_id}
-              className={`row_poster ${isLarge && "row_posterLarger"}`}
+              className={`row_poster ${isLarge && "row_posterLarge"}`}
               src={isLarge ? movie.poster : movie.backdrop_poster}
               alt={movie.title}
               onClick={(event) => handleMovieClick(event, movie)}

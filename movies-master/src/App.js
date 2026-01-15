@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
 import HomePage from "./pages/HomePage";
+import MovieRequestPage from "./pages/MovieRequestPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
@@ -19,6 +20,9 @@ const App = () => {
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/movie/:movieId" element={<MovieDetailsPage />} />
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/request-movie" element={<MovieRequestPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />}></Route>
       </Routes>

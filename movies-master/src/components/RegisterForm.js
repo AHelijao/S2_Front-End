@@ -1,8 +1,6 @@
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { movieApi } from "../constants/axios";
-import { userRequests } from "../constants/requests";
 
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false);
@@ -23,26 +21,13 @@ const RegisterForm = () => {
     setShowPass(!showPass);
   };
 
-  const registerUser = (event) => {
-    event.preventDefault();
-    movieApi.post(userRequests.register, user)
-      .then((response) => {
-        setMessage("Registration successful! Please login.");
-      })
-      .catch((error) => {
-        setMessage(error.response?.data?.message || "Registration failed");
-      });
+  const registerUser = () => {
+    // call our API
   };
   return (
     <div>
       <div className="inputs-container">
         <div className="input-container">
-          <label className="username">Username</label>
-          <input
-            type="text"
-            className="username"
-            onChange={(e) => setUser({ ...user, username: e.target.value })}
-          ></input>
           <label className="email">Email</label>
           <input
             type="email"

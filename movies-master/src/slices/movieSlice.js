@@ -17,20 +17,15 @@ const initialState = {
 };
 
 export const getMovies = createAsyncThunk("movies/fetchMovies", async () => {
-  const userString = localStorage.getItem("user");
-  const user = userString ? JSON.parse(userString) : null;
-  const token = user?.token;
-
-  if (!token) {
-    throw new Error("No authentication token found");
+  try {
+    const response = await movieApi.get(movieRequests.fetchAllMovies, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
   }
-
-  const response = await movieApi.get(movieRequests.fetchAllMovies, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return response.data;
 });
 
 const movieSlice = createSlice({
