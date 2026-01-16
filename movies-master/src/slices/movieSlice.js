@@ -16,6 +16,30 @@ const initialState = {
   error: null,
 };
 
+export const addMovie = createAsyncThunk("movies/addMovie", async (movie) => {
+  const { title, release_date, author, type, poster, backdrop_poster, overview } = movie;
+
+  if (!title || !release_date || !author || !type) {
+    return { message: "missing parameters" };
+  }
+
+  try {
+    const newMovie = new movie({
+      title,
+      release_date,
+      author,
+      type,
+      poster,
+      backdrop_poster,
+      overview,
+      creation_date: movie.creation_date,
+    });
+    return newMovie;
+  } catch (error) {
+    return error;
+  }
+});
+
 export const getMovies = createAsyncThunk("movies/fetchMovies", async () => {
   try {
     const response = await movieApi.get(movieRequests.fetchAllMovies, {
@@ -25,6 +49,7 @@ export const getMovies = createAsyncThunk("movies/fetchMovies", async () => {
     });
     return response.data;
   } catch (error) {
+    return error;
   }
 });
 
